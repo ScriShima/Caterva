@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "716347369066",
+    "project_id": "caterva-d80a6",
+    "storage_bucket": "caterva-d80a6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:716347369066:android:a785ccdc8516fb83104c13",
+        "android_client_info": {
+          "package_name": "com.example.caterva"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "716347369066-mpei7gru34tsvph1l4t2iigv7en2qc46.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDWFQabp5udbTKvHTo8U6z21CIGjS13Pbc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "716347369066-mpei7gru34tsvph1l4t2iigv7en2qc46.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

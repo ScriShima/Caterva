@@ -1,0 +1,31 @@
+<resources>
+    <string name="app_name">Caterva</string>
+
+    <!-- activity_intro -->
+    <string name="image_contentDescription">image</string>
+    <string name="let_s_get_started_text">Давайте начнем</string>
+    <string name="intro_text_description">Упарвляйте своими задачами вместе с Caterva</string>
+    <string name="sign_in">Войти</string>
+    <string name="sign_up">Зарегистироваться</string>
+
+    <!-- activity_sign_up -->
+    <string name="sign_up_description_text">Введите ваше имя, email и пароль для регистрации</string>
+    <string name="name">Имя</string>
+    <string name="password">Пароль</string>
+    <string name="email">Email</string>
+
+    <!-- activity_sign_in -->
+    <string name="sign_in_description_text">Введите email и пароль для входа</string>
+    <string name="Authorization">Авторизация</string>
+
+    <!-- progress_dialog -->
+    <string name="please_click_back_again_to_exit">Пожалуйста нажмите назад еще раз для выхода</string>
+    <string name="please_wait">Пожалуйста подождите&#8230;</string>
+
+    <string name="nav_my_profile">Профиль</string>
+    <string name="nav_sign_out">Выход</string>
+
+    <string name="mobile">Телефон</string>
+    <string name="update">Обновить</string>
+    <string name="my_profile_title">Мой профиль</string>
+</resources>
