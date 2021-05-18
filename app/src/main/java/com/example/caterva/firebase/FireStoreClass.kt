@@ -2,6 +2,7 @@ package com.example.caterva.firebase
 
 import android.app.Activity
 import android.util.Log
+import android.widget.Toast
 import com.example.caterva.activities.MainActivity
 import com.example.caterva.activities.MyProfileActivity
 import com.example.caterva.activities.SignInActivity
@@ -23,6 +24,36 @@ class  FireStoreClass {
                     activity.userRegisteredSuccess()
                 }.addOnFailureListener {
                     e -> Log.e(activity.javaClass.simpleName, "Ошибка записи", e)
+            }
+    }
+
+    fun updateUserProfileData(activity: MyProfileActivity,
+                          userHashMap: HashMap<String, Any>) {
+        mFireStore.collection(Constants.USERS)
+            .document(getCurrentUserId())
+            .update(userHashMap)
+            .addOnSuccessListener {
+                Log.i(activity.javaClass.simpleName,
+                "Profile Data Updated")
+
+                Toast.makeText(
+                    activity,
+                    "Профиль обновлен",
+                    Toast.LENGTH_LONG
+                ).show()
+
+                activity.profileUpdateSuccess()
+            }.addOnFailureListener {
+                e ->
+                activity.hideProgressDialog()
+                Log.e(activity.javaClass.simpleName,
+                "Error while creating a board", e)
+
+                Toast.makeText(
+                    activity,
+                    "Ошибка при обновлении",
+                    Toast.LENGTH_LONG
+                ).show()
             }
     }
 
