@@ -28,4 +28,8 @@
     <string name="mobile">Телефон</string>
     <string name="update">Обновить</string>
     <string name="my_profile_title">Мой профиль</string>
+
+    <string name="create_board_title">Создать доску</string>
+    <string name="create">Создать</string>
+    <string name="board_name">Имя доски</string>
 </resources>

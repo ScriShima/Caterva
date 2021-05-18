@@ -148,7 +148,7 @@ class MyProfileActivity : BaseActivity() {
         }
     }
 
-    fun updateUserProfileData() {
+    private fun updateUserProfileData() {
         val userHashMap = HashMap<String, Any>()
 
 
