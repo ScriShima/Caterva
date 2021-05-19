@@ -9,4 +9,5 @@
     <color name="white">#FFFFFFFF</color>
     <color name="lightGray">#D3D3D3</color>
     <color name="snackbar_error_color">#F72400</color>
+
 </resources>

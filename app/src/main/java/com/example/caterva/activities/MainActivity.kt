@@ -12,6 +12,7 @@ import com.bumptech.glide.Glide
 import com.example.caterva.R
 import com.example.caterva.firebase.FireStoreClass
 import com.example.caterva.models.User
+import com.example.caterva.utils.Constants
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_main.*
@@ -22,6 +23,8 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
     companion object {
         const val MY_PROFILE_REQUEST_CODE: Int = 11
     }
+
+    private lateinit var mUserName: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,10 +37,11 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         FireStoreClass().loadUserData(this)
 
         fab_create_board.setOnClickListener {
-            startActivity(Intent(
-                this,
-                CreateBoardActivity::class.java
-            ))
+            val intent = Intent(
+                    this,
+                    CreateBoardActivity::class.java)
+            intent.putExtra(Constants.NAME, mUserName)
+            startActivity(intent)
         }
     }
 
@@ -100,6 +104,8 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
     }
 
     fun updateNavigationUserDetails(user: User) {
+
+        mUserName = user.name
 
         val headerView = nav_view.getHeaderView(0)
         val navUserImage = headerView.findViewById<ImageView>(R.id.nav_user_image)
