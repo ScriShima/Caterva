@@ -66,7 +66,21 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
             rv_boards_list.setHasFixedSize(true)
 
             val adapter = BoardItemsAdapter(this@MainActivity, boardsList)
-            rv_boards_list.adapter = adapter // Attach the adapter to the recyclerView.
+            rv_boards_list.adapter = adapter
+
+            adapter.setOnClickListener(object: BoardItemsAdapter.OnClickListener {
+                override fun onClick(position: Int, model: Board) {
+
+                    val intent = Intent(
+                        this@MainActivity,
+                        TaskListActivity::class.java
+                    )
+                    intent.putExtra(Constants.DOCUMENT_ID, model.documentId)
+
+                   startActivity(intent)
+                }
+            })
+
         } else {
             rv_boards_list.visibility = View.GONE
             tv_no_board_available.visibility = View.VISIBLE

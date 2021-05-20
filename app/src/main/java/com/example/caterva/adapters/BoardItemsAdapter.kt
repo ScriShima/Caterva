@@ -66,5 +66,6 @@ open class BoardItemsAdapter(
         fun onClick(position: Int, model: Board)
     }
 
+
     private class MyViewHolder(view: View) : RecyclerView.ViewHolder(view)
 }
