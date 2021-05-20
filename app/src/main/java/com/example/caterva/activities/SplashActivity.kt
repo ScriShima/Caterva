@@ -7,10 +7,8 @@ import android.os.Bundle
 import android.os.Handler
 import android.view.WindowManager
 import com.example.caterva.R
-import com.example.caterva.firebase.FireStoreClass
+import com.example.caterva.firebase.FirestoreClass
 import kotlinx.android.synthetic.main.activity_splash.*
-import java.io.FileDescriptor.out
-import java.lang.System.out
 
 @Suppress("DEPRECATION")
 class SplashActivity : AppCompatActivity() {
@@ -29,7 +27,7 @@ class SplashActivity : AppCompatActivity() {
 
         Handler().postDelayed({
 
-            var currentUserId = FireStoreClass().getCurrentUserId()
+            var currentUserId = FirestoreClass().getCurrentUserID()
             if(currentUserId.isNotEmpty()) {
                 startActivity(Intent(this, MainActivity::class.java))
             }else {

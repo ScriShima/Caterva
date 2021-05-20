@@ -6,7 +6,7 @@ import android.text.TextUtils
 import android.view.WindowManager
 import android.widget.Toast
 import com.example.caterva.R
-import com.example.caterva.firebase.FireStoreClass
+import com.example.caterva.firebase.FirestoreClass
 import com.example.caterva.models.User
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_sign_in.*
@@ -65,7 +65,7 @@ class SignInActivity : BaseActivity() {
                     .addOnCompleteListener { task ->
                         hideProgressDialog()
                         if (task.isSuccessful) {
-                            FireStoreClass().loadUserData(this@SignInActivity)
+                            FirestoreClass().loadUserData(this@SignInActivity)
                         }else {
                             Toast.makeText(
                                     baseContext,

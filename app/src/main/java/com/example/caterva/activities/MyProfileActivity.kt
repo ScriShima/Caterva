@@ -6,23 +6,19 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
-import android.provider.MediaStore
 import android.util.Log
-import android.webkit.MimeTypeMap
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.example.caterva.R
-import com.example.caterva.firebase.FireStoreClass
+import com.example.caterva.firebase.FirestoreClass
 import com.example.caterva.models.User
 import com.example.caterva.utils.Constants
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import kotlinx.android.synthetic.main.activity_my_profile.*
 import java.io.IOException
-import java.lang.Exception
-import java.net.URI
 
 class MyProfileActivity : BaseActivity() {
 
@@ -38,7 +34,7 @@ class MyProfileActivity : BaseActivity() {
 
         setupActionBar()
 
-        FireStoreClass().loadUserData(this)
+        FirestoreClass().loadUserData(this)
 
         iv_profile_user_image.setOnClickListener {
             if (ContextCompat.checkSelfPermission(
@@ -152,7 +148,7 @@ class MyProfileActivity : BaseActivity() {
             userHashMap[Constants.MOBILE] = et_mobile.text.toString().toLong()
         }
 
-            FireStoreClass().updateUserProfileData(this, userHashMap)
+            FirestoreClass().updateUserProfileData(this, userHashMap)
 
 
     }

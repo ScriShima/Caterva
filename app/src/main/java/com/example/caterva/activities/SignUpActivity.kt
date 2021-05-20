@@ -1,16 +1,14 @@
 package com.example.caterva.activities
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.WindowManager
 import android.widget.Toast
 import com.example.caterva.R
-import com.example.caterva.firebase.FireStoreClass
+import com.example.caterva.firebase.FirestoreClass
 import com.example.caterva.models.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import kotlinx.android.synthetic.main.activity_sign_in.*
 import kotlinx.android.synthetic.main.activity_sign_up.*
 
 @Suppress("DEPRECATION")
@@ -72,7 +70,7 @@ class SignUpActivity : BaseActivity() {
                             val registeredEmail = firebaseUser.email!!
                             val user = User(firebaseUser.uid, name, registeredEmail)
 
-                            FireStoreClass().registerUser(this, user)
+                            FirestoreClass().registerUser(this, user)
                         } else {
                             Toast.makeText(
                                     this,
