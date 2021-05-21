@@ -7,12 +7,14 @@ import com.example.caterva.R
 import com.example.caterva.adapters.TaskListItemsAdapter
 import com.example.caterva.firebase.FirestoreClass
 import com.example.caterva.models.Board
+import com.example.caterva.models.Card
 import com.example.caterva.models.Task
 import com.example.caterva.utils.Constants
 import kotlinx.android.synthetic.main.activity_my_profile.*
 import kotlinx.android.synthetic.main.activity_task_list.*
 
 class TaskListActivity : BaseActivity() {
+
     private lateinit var mBoardDetails: Board
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,6 +45,7 @@ class TaskListActivity : BaseActivity() {
     }
 
     fun boardDetails(board: Board) {
+
         mBoardDetails = board
 
         hideProgressDialog()
@@ -53,11 +56,7 @@ class TaskListActivity : BaseActivity() {
         mBoardDetails.taskList.add(addTaskList)
 
         rv_task_list.layoutManager =
-            LinearLayoutManager(
-                this@TaskListActivity,
-                LinearLayoutManager.HORIZONTAL,
-                false
-            )
+            LinearLayoutManager(this@TaskListActivity, LinearLayoutManager.HORIZONTAL, false)
         rv_task_list.setHasFixedSize(true)
 
         val adapter = TaskListItemsAdapter(this@TaskListActivity, mBoardDetails.taskList)
@@ -74,13 +73,59 @@ class TaskListActivity : BaseActivity() {
         mBoardDetails.taskList.removeAt(mBoardDetails.taskList.size - 1)
 
         showProgressDialog(resources.getString(R.string.please_wait))
+        FirestoreClass().addUpdateTaskList(this@TaskListActivity, mBoardDetails)
+    }
 
+    fun updateTaskList(position: Int, listName: String, model: Task) {
+
+        val task = Task(listName, model.createdBy)
+
+        mBoardDetails.taskList[position] = task
+        mBoardDetails.taskList.removeAt(mBoardDetails.taskList.size - 1)
+
+        showProgressDialog(resources.getString(R.string.please_wait))
+        FirestoreClass().addUpdateTaskList(this@TaskListActivity, mBoardDetails)
+    }
+
+    fun deleteTaskList(position: Int) {
+
+        mBoardDetails.taskList.removeAt(position)
+
+        mBoardDetails.taskList.removeAt(mBoardDetails.taskList.size - 1)
+
+        showProgressDialog(resources.getString(R.string.please_wait))
         FirestoreClass().addUpdateTaskList(this@TaskListActivity, mBoardDetails)
     }
 
     fun addUpdateTaskListSuccess() {
+
         hideProgressDialog()
+
         showProgressDialog(resources.getString(R.string.please_wait))
         FirestoreClass().getBoardDetails(this@TaskListActivity, mBoardDetails.documentId)
+    }
+
+    fun addCardToTaskList(position: Int, cardName: String) {
+
+        mBoardDetails.taskList.removeAt(mBoardDetails.taskList.size - 1)
+
+        val cardAssignedUsersList: ArrayList<String> = ArrayList()
+        cardAssignedUsersList.add(FirestoreClass().getCurrentUserID())
+
+        val card = Card(cardName, FirestoreClass().getCurrentUserID(), cardAssignedUsersList)
+
+        val cardsList = mBoardDetails.taskList[position].cards
+        cardsList.add(card)
+
+        val task = Task(
+            mBoardDetails.taskList[position].title,
+            mBoardDetails.taskList[position].createdBy,
+            cardsList
+        )
+
+        mBoardDetails.taskList[position] = task
+
+        showProgressDialog(resources.getString(R.string.please_wait))
+        FirestoreClass().addUpdateTaskList(this@TaskListActivity, mBoardDetails)
     }
 }

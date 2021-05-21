@@ -4,23 +4,22 @@ import android.os.Parcel
 import android.os.Parcelable
 import com.google.android.gms.common.internal.safeparcel.SafeParcelWriter.writeString
 
-data class User (
-    val id: String = "", // id пользователя
-    val name: String = "", // Имя пользователя
-    val email: String = "", // электронная почта
-    val image: String = "", // аватарка пользователя
-    val phoneNumber: Long = 0, // номер телефона
+data class User(
+    val id: String = "",
+    val name: String = "",
+    val email: String = "",
+    val image: String = "",
+    val mobile: Long = 0,
     val fcmToken: String = ""
-): Parcelable {
-    constructor(parcel: Parcel) : this(
-            parcel.readString()!!,
-            parcel.readString()!!,
-            parcel.readString()!!,
-            parcel.readString()!!,
-            parcel.readLong(),
-            parcel.readString()!!
-    ) {
-    }
+) : Parcelable {
+    constructor(source: Parcel) : this(
+        source.readString()!!,
+        source.readString()!!,
+        source.readString()!!,
+        source.readString()!!,
+        source.readLong(),
+        source.readString()!!
+    )
 
     override fun describeContents() = 0
 
@@ -29,18 +28,15 @@ data class User (
         writeString(name)
         writeString(email)
         writeString(image)
-        writeLong(phoneNumber)
+        writeLong(mobile)
         writeString(fcmToken)
-
     }
 
-    companion object CREATOR : Parcelable.Creator<User> {
-        override fun createFromParcel(parcel: Parcel): User {
-            return User(parcel)
-        }
-
-        override fun newArray(size: Int): Array<User?> {
-            return arrayOfNulls(size)
+    companion object {
+        @JvmField
+        val CREATOR: Parcelable.Creator<User> = object : Parcelable.Creator<User> {
+            override fun createFromParcel(source: Parcel): User = User(source)
+            override fun newArray(size: Int): Array<User?> = arrayOfNulls(size)
         }
     }
 }

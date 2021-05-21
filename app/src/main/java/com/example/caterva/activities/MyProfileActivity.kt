@@ -126,8 +126,8 @@ class MyProfileActivity : BaseActivity() {
 
         et_name.setText(user.name)
         et_email.setText(user.email)
-        if (user.phoneNumber != 0L) {
-            et_mobile.setText(user.phoneNumber.toString())
+        if (user.mobile != 0L) {
+            et_mobile.setText(user.mobile.toString())
         }
     }
 
@@ -144,7 +144,7 @@ class MyProfileActivity : BaseActivity() {
             userHashMap[Constants.NAME] = et_name.text.toString()
         }
 
-        if(et_mobile.text.toString() != mUserDetails.phoneNumber.toString()) {
+        if(et_mobile.text.toString() != mUserDetails.mobile.toString()) {
             userHashMap[Constants.MOBILE] = et_mobile.text.toString().toLong()
         }
 

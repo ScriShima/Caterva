@@ -57,6 +57,7 @@ class FirestoreClass {
                 }
             }
             .addOnFailureListener { e ->
+
                 when (activity) {
                     is SignInActivity -> {
                         activity.hideProgressDialog()
@@ -76,16 +77,14 @@ class FirestoreClass {
             }
     }
 
-
     fun updateUserProfileData(activity: MyProfileActivity, userHashMap: HashMap<String, Any>) {
         mFireStore.collection(Constants.USERS)
             .document(getCurrentUserID())
             .update(userHashMap)
             .addOnSuccessListener {
-
                 Log.e(activity.javaClass.simpleName, "Profile Data updated successfully!")
 
-                Toast.makeText(activity, "Профиль успешно обновлен", Toast.LENGTH_SHORT).show()
+                Toast.makeText(activity, "Провиль обновлен", Toast.LENGTH_SHORT).show()
 
                 activity.profileUpdateSuccess()
             }
@@ -127,9 +126,7 @@ class FirestoreClass {
             .whereArrayContains(Constants.ASSIGNED_TO, getCurrentUserID())
             .get()
             .addOnSuccessListener { document ->
-
                 Log.e(activity.javaClass.simpleName, document.documents.toString())
-
                 val boardsList: ArrayList<Board> = ArrayList()
 
                 for (i in document.documents) {
@@ -160,8 +157,8 @@ class FirestoreClass {
                 board.documentId = document.id
 
                 activity.boardDetails(board)
-
-            }.addOnFailureListener { e ->
+            }
+            .addOnFailureListener { e ->
                 activity.hideProgressDialog()
                 Log.e(activity.javaClass.simpleName, "Error while creating a board.", e)
             }
