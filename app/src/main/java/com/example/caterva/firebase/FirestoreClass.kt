@@ -224,4 +224,49 @@ class FirestoreClass {
                 )
             }
     }
+
+    fun getMemberDetails(activity: MembersActivity, name:String) {
+        mFireStore.collection(Constants.USERS)
+            .whereEqualTo(Constants.NAME, name)
+            .get()
+            .addOnSuccessListener {
+                document ->
+                if(document.documents.size > 0) {
+                    val user = document.documents[0].toObject(User::class.java)!!
+                    activity.memberDetails(user)
+                }else {
+                    activity.hideProgressDialog()
+                    activity.showErrorSnackBar("Такого пользователя не найдено")
+                }
+            }.addOnFailureListener {
+                e ->
+                Log.e(
+                    activity.javaClass.simpleName,
+                    "Ошибка получения данных пользователя",
+                    e
+                )
+            }
+    }
+
+    fun assignMemberToBoard(
+        activity: MembersActivity, board: Board, user: User) {
+
+        val assignToHashMap = HashMap<String, Any>()
+        assignToHashMap[Constants.ASSIGNED_TO] = board.assignedTo
+
+        mFireStore.collection(Constants.BOARDS)
+            .document(board.documentId)
+            .update(assignToHashMap)
+            .addOnSuccessListener {
+                activity.memberAssignSuccess(user)
+            }.addOnFailureListener {
+                e ->
+                Log.e(
+                    activity.javaClass.simpleName,
+                    "Error while adding a member",
+                    e
+                )
+            }
+
+    }
 }
