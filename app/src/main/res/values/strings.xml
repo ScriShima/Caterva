@@ -34,4 +34,11 @@
     <string name="board_name">Имя доски</string>
 
     <string name="no_boards_are_available">Не найдено</string>
+
+    <!-- item_task -->
+    <string name="action_add_list">Добавить список</string>
+    <string name="hint_list_name">Имя списка</string>
+    <string name="action_add_card">Добавить карточку</string>
+    <string name="hint_card_name">Имя карточки</string>
+    <string name="add_list">Добавить список</string>
 </resources>
