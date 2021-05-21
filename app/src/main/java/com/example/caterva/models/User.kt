@@ -2,14 +2,13 @@ package com.example.caterva.models
 
 import android.os.Parcel
 import android.os.Parcelable
-import com.google.android.gms.common.internal.safeparcel.SafeParcelWriter.writeString
 
 data class User(
     val id: String = "",
     val name: String = "",
     val email: String = "",
     val image: String = "",
-    val mobile: Long = 0,
+    val phoneNumber: Long = 0,
     val fcmToken: String = ""
 ) : Parcelable {
     constructor(source: Parcel) : this(
@@ -28,7 +27,7 @@ data class User(
         writeString(name)
         writeString(email)
         writeString(image)
-        writeLong(mobile)
+        writeLong(phoneNumber)
         writeString(fcmToken)
     }
 

@@ -41,4 +41,6 @@
     <string name="action_add_card">Добавить карточку</string>
     <string name="hint_card_name">Имя карточки</string>
     <string name="add_list">Добавить список</string>
+
+    <string name="members">Участники</string>
 </resources>

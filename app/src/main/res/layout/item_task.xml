@@ -16,7 +16,7 @@
             android:id="@+id/tv_add_task_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white"
+            android:background="@color/lightGray"
             android:foreground="?attr/selectableItemBackground"
             android:gravity="center"
             android:padding="@dimen/task_item_add_item_text_padding"
@@ -75,7 +75,7 @@
             android:id="@+id/ll_task_item"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white"
+            android:background="@color/lightGray"
             android:gravity="center_vertical"
             android:orientation="vertical"
             android:visibility="gone"
@@ -85,7 +85,7 @@
                 android:id="@+id/ll_title_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/white"
+                android:background="@color/lightGray"
                 android:elevation="@dimen/task_item_title_view_elevation"
                 android:gravity="center"
                 android:orientation="horizontal"
@@ -98,7 +98,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:padding="@dimen/task_item_title_text_padding"
-                    android:textColor="@color/white"
+                    android:textColor="@color/lightGray"
                     android:textSize="@dimen/task_item_title_text_size"
                     tools:text="Title" />
 
@@ -124,7 +124,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/task_item_divider_height"
-                android:background="@color/white" />
+                android:background="@color/lightGray" />
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cv_edit_task_list_name"
@@ -226,7 +226,7 @@
                 android:id="@+id/tv_add_card"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/white"
+                android:background="@color/lightGray"
                 android:elevation="@dimen/task_item_add_card_text_elevation"
                 android:foreground="?attr/selectableItemBackground"
                 android:gravity="center"
