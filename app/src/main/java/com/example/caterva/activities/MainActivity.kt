@@ -21,6 +21,7 @@ import com.example.caterva.utils.Constants
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_task_list.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.content_main.*
 
@@ -51,7 +52,17 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
             intent.putExtra(Constants.NAME, mUserName)
             startActivityForResult(intent, CREATE_BOARD_REQUEST_CODE )
         }
+        refreshApp()
+
     }
+
+    private fun refreshApp() {
+        swipe_to_refresh_main_activity.setOnRefreshListener {
+            FirestoreClass().getBoardsList(this)
+            swipe_to_refresh_main_activity.isRefreshing = false
+        }
+    }
+
 
     fun populateBoardsListToUI(boardsList: ArrayList<Board>) {
 

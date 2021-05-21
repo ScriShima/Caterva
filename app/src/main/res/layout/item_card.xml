@@ -19,7 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/item_card_label_height"
             android:visibility="gone"
-            tools:background="@color/lightGray" />
+            tools:background="@color/white" />
 
         <TextView
             android:id="@+id/tv_card_name"
@@ -27,6 +27,7 @@
             android:layout_height="wrap_content"
             android:padding="@dimen/item_card_name_text_padding"
             android:textSize="@dimen/item_card_name_text_size"
+            android:textColor="@color/black"
             tools:text="Card Name" />
 
         <TextView

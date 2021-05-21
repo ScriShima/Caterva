@@ -57,6 +57,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:autofillHints="@string/hint_list_name"
+                    android:textColor="@color/black"
                     android:hint="@string/hint_list_name"
                     android:inputType="text" />
 
@@ -98,7 +99,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:padding="@dimen/task_item_title_text_padding"
-                    android:textColor="@color/lightGray"
+                    android:textColor="@color/black"
                     android:textSize="@dimen/task_item_title_text_size"
                     tools:text="Title" />
 
@@ -123,8 +124,7 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/task_item_divider_height"
-                android:background="@color/lightGray" />
+                android:layout_height="@dimen/task_item_divider_height"/>
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cv_edit_task_list_name"
