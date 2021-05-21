@@ -43,4 +43,9 @@
     <string name="add_list">Добавить список</string>
 
     <string name="members">Участники</string>
+    
+    <string name="add_member">Добавить участника</string>
+    <string name="cancel">Отмена</string>
+    <string name="add">Добавить</string>
+    <string name="search_member">Поиск участинков</string>
 </resources>
