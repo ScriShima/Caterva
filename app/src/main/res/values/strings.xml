@@ -56,4 +56,13 @@
     <string name="select_due_date">Выбрать доту окончания</string>
     
     <string name="delete_card">Удалить карточку</string>
+
+    <string name="alert">Внимание</string>
+    <string name="confirmation_message_to_delete_card">Вы действительно хотите удалить карточку \'%1$s\'?</string>
+    <string name="yes">Да</string>
+    <string name="no">Нет</string>
+
+    <string name="str_select_label_color">Выбор цвета карточки</string>
+
+    <string name="str_select_member">Выбор участников</string>
 </resources>

@@ -24,7 +24,7 @@ open class TaskListItemsAdapter(
 
         val view = LayoutInflater.from(context).inflate(R.layout.item_task, parent, false)
         val layoutParams = LinearLayout.LayoutParams(
-            (parent.width * 0.7).toInt(),
+            (parent.width * 0.8).toInt(),
             LinearLayout.LayoutParams.WRAP_CONTENT
         )
         layoutParams.setMargins((15.toDp()).toPx(), 0, (40.toDp()).toPx(), 0)
