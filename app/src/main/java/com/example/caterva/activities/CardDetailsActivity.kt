@@ -200,7 +200,7 @@ class CardDetailsActivity : BaseActivity() {
             mSelectedColor
         )
 
-        
+
 
         val taskList: ArrayList<Task> = mBoardDetails.taskList
         taskList.removeAt(taskList.size - 1)
@@ -302,7 +302,7 @@ class CardDetailsActivity : BaseActivity() {
                 6
             )
 
-            val adapter = CardMemberListItemsAdapter(this, selectedMembersList)
+            val adapter = CardMemberListItemsAdapter(this, selectedMembersList, true)
             rv_selected_members_list.adapter = adapter
             adapter.setOnClickListener(
                 object : CardMemberListItemsAdapter.OnClickListener {
