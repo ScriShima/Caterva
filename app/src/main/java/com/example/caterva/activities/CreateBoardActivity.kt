@@ -72,11 +72,9 @@ class CreateBoardActivity : BaseActivity() {
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == Constants.READ_STORAGE_PERMISSION_CODE) {
-            //If permission is granted
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 Constants.showImageChooser(this@CreateBoardActivity)
             } else {
-                //Displaying another toast if permission is not granted
                 Toast.makeText(
                         this,
                         "Вы отказали в доступе, вы так же можете разрешить его в настройках",
@@ -130,7 +128,6 @@ class CreateBoardActivity : BaseActivity() {
 
         sRef.putFile(mSelectedImageFileUri!!)
                 .addOnSuccessListener { taskSnapshot ->
-                    // The image upload is success
                     Log.e(
                             "Firebase Image URL",
                             taskSnapshot.metadata!!.reference!!.downloadUrl.toString()
@@ -157,7 +154,7 @@ class CreateBoardActivity : BaseActivity() {
     }
     private fun createBoard() {
         val assignedUsersArrayList: ArrayList<String> = ArrayList()
-        assignedUsersArrayList.add(getCurrentUserID()) // adding the current user id.
+        assignedUsersArrayList.add(getCurrentUserID())
 
         val board = Board(
                 et_board_name.text.toString(),

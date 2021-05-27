@@ -18,150 +18,166 @@ class FirestoreClass {
     fun registerUser(activity: SignUpActivity, userInfo: User) {
 
         mFireStore.collection(Constants.USERS)
-            .document(getCurrentUserID())
-            .set(userInfo, SetOptions.merge())
-            .addOnSuccessListener {
+                .document(getCurrentUserID())
+                .set(userInfo, SetOptions.merge())
+                .addOnSuccessListener {
 
-                activity.userRegisteredSuccess()
-            }
-            .addOnFailureListener { e ->
-                activity.hideProgressDialog()
-                Log.e(
-                    activity.javaClass.simpleName,
-                    "Error writing document",
-                    e
-                )
-            }
+                    activity.userRegisteredSuccess()
+                }
+                .addOnFailureListener { e ->
+                    activity.hideProgressDialog()
+                    Log.e(
+                            activity.javaClass.simpleName,
+                            "Error writing document",
+                            e
+                    )
+                }
     }
 
     fun loadUserData(activity: Activity, readBoardsList: Boolean = false) {
 
         mFireStore.collection(Constants.USERS)
-            .document(getCurrentUserID())
-            .get()
-            .addOnSuccessListener { document ->
-                Log.e(activity.javaClass.simpleName, document.toString())
+                .document(getCurrentUserID())
+                .get()
+                .addOnSuccessListener { document ->
+                    Log.e(activity.javaClass.simpleName, document.toString())
 
-                val loggedInUser = document.toObject(User::class.java)!!
+                    val loggedInUser = document.toObject(User::class.java)!!
 
-                when (activity) {
-                    is SignInActivity -> {
-                        activity.signInSuccess(loggedInUser)
-                    }
-                    is MainActivity -> {
-                        activity.updateNavigationUserDetails(loggedInUser, readBoardsList)
-                    }
-                    is MyProfileActivity -> {
-                        activity.setUserDataInUI(loggedInUser)
+                    when (activity) {
+                        is SignInActivity -> {
+                            activity.signInSuccess(loggedInUser)
+                        }
+                        is MainActivity -> {
+                            activity.updateNavigationUserDetails(loggedInUser, readBoardsList)
+                        }
+                        is MyProfileActivity -> {
+                            activity.setUserDataInUI(loggedInUser)
+                        }
                     }
                 }
-            }
-            .addOnFailureListener { e ->
-
-                when (activity) {
-                    is SignInActivity -> {
-                        activity.hideProgressDialog()
+                .addOnFailureListener { e ->
+                    when (activity) {
+                        is SignInActivity -> {
+                            activity.hideProgressDialog()
+                        }
+                        is MainActivity -> {
+                            activity.hideProgressDialog()
+                        }
+                        is MyProfileActivity -> {
+                            activity.hideProgressDialog()
+                        }
                     }
-                    is MainActivity -> {
-                        activity.hideProgressDialog()
-                    }
-                    is MyProfileActivity -> {
-                        activity.hideProgressDialog()
-                    }
+                    Log.e(
+                            activity.javaClass.simpleName,
+                            "Error while getting loggedIn user details",
+                            e
+                    )
                 }
-                Log.e(
-                    activity.javaClass.simpleName,
-                    "Error while getting loggedIn user details",
-                    e
-                )
-            }
     }
 
-    fun updateUserProfileData(activity: MyProfileActivity, userHashMap: HashMap<String, Any>) {
+    fun updateUserProfileData(activity: Activity, userHashMap: HashMap<String, Any>) {
         mFireStore.collection(Constants.USERS)
-            .document(getCurrentUserID())
-            .update(userHashMap)
-            .addOnSuccessListener {
-                Log.e(activity.javaClass.simpleName, "Profile Data updated successfully!")
+                .document(getCurrentUserID())
+                .update(userHashMap)
+                .addOnSuccessListener {
+                    Log.e(activity.javaClass.simpleName, "Data updated successfully!")
 
-                Toast.makeText(activity, "Провиль обновлен", Toast.LENGTH_SHORT).show()
 
-                activity.profileUpdateSuccess()
-            }
-            .addOnFailureListener { e ->
-                activity.hideProgressDialog()
-                Log.e(
-                    activity.javaClass.simpleName,
-                    "Error while creating a board.",
-                    e
-                )
-            }
+
+                    when (activity) {
+                        is MainActivity -> {
+                            activity.tokenUpdateSuccess()
+                        }
+                        is MyProfileActivity -> {
+                            activity.profileUpdateSuccess()
+                        }
+                    }
+                }
+                .addOnFailureListener { e ->
+                    when (activity) {
+                        is MainActivity -> {
+                            activity.hideProgressDialog()
+                        }
+                        is MyProfileActivity -> {
+                            activity.hideProgressDialog()
+                        }
+                    }
+
+                    Log.e(
+                            activity.javaClass.simpleName,
+                            "Error while creating a board.",
+                            e
+                    )
+                }
     }
 
     fun createBoard(activity: CreateBoardActivity, board: Board) {
 
         mFireStore.collection(Constants.BOARDS)
-            .document()
-            .set(board, SetOptions.merge())
-            .addOnSuccessListener {
-                Log.e(activity.javaClass.simpleName, "Board created successfully.")
+                .document()
+                .set(board, SetOptions.merge())
+                .addOnSuccessListener {
+                    Log.e(activity.javaClass.simpleName, "Board created successfully.")
 
-                Toast.makeText(activity, "Доска успешно создана", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(activity, "Board created successfully.", Toast.LENGTH_SHORT).show()
 
-                activity.boardCreatedSuccessfully()
-            }
-            .addOnFailureListener { e ->
-                activity.hideProgressDialog()
-                Log.e(
-                    activity.javaClass.simpleName,
-                    "Error while creating a board.",
-                    e
-                )
-            }
+                    activity.boardCreatedSuccessfully()
+                }
+                .addOnFailureListener { e ->
+                    activity.hideProgressDialog()
+                    Log.e(
+                            activity.javaClass.simpleName,
+                            "Error while creating a board.",
+                            e
+                    )
+                }
     }
 
     fun getBoardsList(activity: MainActivity) {
 
         mFireStore.collection(Constants.BOARDS)
-            .whereArrayContains(Constants.ASSIGNED_TO, getCurrentUserID())
-            .get()
-            .addOnSuccessListener { document ->
-                Log.e(activity.javaClass.simpleName, document.documents.toString())
-                val boardsList: ArrayList<Board> = ArrayList()
 
-                for (i in document.documents) {
+                .whereArrayContains(Constants.ASSIGNED_TO, getCurrentUserID())
+                .get()
+                .addOnSuccessListener { document ->
+                    Log.e(activity.javaClass.simpleName, document.documents.toString())
+                    val boardsList: ArrayList<Board> = ArrayList()
 
-                    val board = i.toObject(Board::class.java)!!
-                    board.documentId = i.id
+                    for (i in document.documents) {
 
-                    boardsList.add(board)
+                        val board = i.toObject(Board::class.java)!!
+                        board.documentId = i.id
+
+                        boardsList.add(board)
+                    }
+
+                    activity.populateBoardsListToUI(boardsList)
                 }
+                .addOnFailureListener { e ->
 
-                activity.populateBoardsListToUI(boardsList)
-            }
-            .addOnFailureListener { e ->
-
-                activity.hideProgressDialog()
-                Log.e(activity.javaClass.simpleName, "Error while creating a board.", e)
-            }
+                    activity.hideProgressDialog()
+                    Log.e(activity.javaClass.simpleName, "Error while creating a board.", e)
+                }
     }
 
     fun getBoardDetails(activity: TaskListActivity, documentId: String) {
         mFireStore.collection(Constants.BOARDS)
-            .document(documentId)
-            .get()
-            .addOnSuccessListener { document ->
-                Log.e(activity.javaClass.simpleName, document.toString())
+                .document(documentId)
+                .get()
+                .addOnSuccessListener { document ->
+                    Log.e(activity.javaClass.simpleName, document.toString())
 
-                val board = document.toObject(Board::class.java)!!
-                board.documentId = document.id
+                    val board = document.toObject(Board::class.java)!!
+                    board.documentId = document.id
 
-                activity.boardDetails(board)
-            }
-            .addOnFailureListener { e ->
-                activity.hideProgressDialog()
-                Log.e(activity.javaClass.simpleName, "Error while creating a board.", e)
-            }
+                    // Send the result of board to the base activity.
+                    activity.boardDetails(board)
+                }
+                .addOnFailureListener { e ->
+                    activity.hideProgressDialog()
+                    Log.e(activity.javaClass.simpleName, "Error while creating a board.", e)
+                }
     }
 
     fun addUpdateTaskList(activity: Activity, board: Board) {
@@ -170,25 +186,109 @@ class FirestoreClass {
         taskListHashMap[Constants.TASK_LIST] = board.taskList
 
         mFireStore.collection(Constants.BOARDS)
-            .document(board.documentId)
-            .update(taskListHashMap)
-            .addOnSuccessListener {
-                Log.e(activity.javaClass.simpleName, "TaskList updated successfully.")
+                .document(board.documentId)
+                .update(taskListHashMap)
+                .addOnSuccessListener {
+                    Log.e(activity.javaClass.simpleName, "TaskList updated successfully.")
 
-                if (activity is TaskListActivity) {
-                    activity.addUpdateTaskListSuccess()
-                } else if (activity is CardDetailsActivity) {
-                    activity.addUpdateTaskListSuccess()
+                    if (activity is TaskListActivity) {
+                        activity.addUpdateTaskListSuccess()
+                    } else if (activity is CardDetailsActivity) {
+                        activity.addUpdateTaskListSuccess()
+                    }
                 }
-            }
-            .addOnFailureListener { e ->
-                if (activity is TaskListActivity) {
-                    activity.hideProgressDialog()
-                } else if (activity is TaskListActivity) {
-                    activity.hideProgressDialog()
+                .addOnFailureListener { e ->
+                    if (activity is TaskListActivity) {
+                        activity.hideProgressDialog()
+                    } else if (activity is TaskListActivity) {
+                        activity.hideProgressDialog()
+                    }
+                    Log.e(activity.javaClass.simpleName, "Error while creating a board.", e)
                 }
-                Log.e(activity.javaClass.simpleName, "Error while creating a board.", e)
-            }
+    }
+
+    fun getAssignedMembersListDetails(activity: Activity, assignedTo: ArrayList<String>) {
+
+        mFireStore.collection(Constants.USERS) // Collection Name
+                .whereIn(
+                        Constants.ID,
+                        assignedTo
+                ) // Here the database field name and the id's of the members.
+                .get()
+                .addOnSuccessListener { document ->
+                    Log.e(activity.javaClass.simpleName, document.documents.toString())
+
+                    val usersList: ArrayList<User> = ArrayList()
+
+                    for (i in document.documents) {
+                        // Convert all the document snapshot to the object using the data model class.
+                        val user = i.toObject(User::class.java)!!
+                        usersList.add(user)
+                    }
+
+                    if (activity is MembersActivity) {
+                        activity.setUpMemberList(usersList)
+                    } else if (activity is TaskListActivity) {
+                        activity.boardMemberDetailsList(usersList)
+                    }
+                }
+                .addOnFailureListener { e ->
+                    if (activity is MembersActivity) {
+                        activity.hideProgressDialog()
+                    } else if (activity is TaskListActivity) {
+                        activity.hideProgressDialog()
+                    }
+                    Log.e(
+                            activity.javaClass.simpleName,
+                            "Error while creating a board.",
+                            e
+                    )
+                }
+    }
+
+    fun getMemberDetails(activity: MembersActivity, email: String) {
+
+        mFireStore.collection(Constants.USERS)
+                .whereEqualTo(Constants.NAME, email)
+                .get()
+                .addOnSuccessListener { document ->
+                    Log.e(activity.javaClass.simpleName, document.documents.toString())
+
+                    if (document.documents.size > 0) {
+                        val user = document.documents[0].toObject(User::class.java)!!
+                        activity.memberDetails(user)
+                    } else {
+                        activity.hideProgressDialog()
+                        activity.showErrorSnackBar("No such member found.")
+                    }
+
+                }
+                .addOnFailureListener { e ->
+                    activity.hideProgressDialog()
+                    Log.e(
+                            activity.javaClass.simpleName,
+                            "Error while getting user details",
+                            e
+                    )
+                }
+    }
+
+    fun assignMemberToBoard(activity: MembersActivity, board: Board, user: User) {
+
+        val assignedToHashMap = HashMap<String, Any>()
+        assignedToHashMap[Constants.ASSIGNED_TO] = board.assignedTo
+
+        mFireStore.collection(Constants.BOARDS)
+                .document(board.documentId)
+                .update(assignedToHashMap)
+                .addOnSuccessListener {
+                    Log.e(activity.javaClass.simpleName, "TaskList updated successfully.")
+                    activity.memberAssignSuccess(user)
+                }
+                .addOnFailureListener { e ->
+                    activity.hideProgressDialog()
+                    Log.e(activity.javaClass.simpleName, "Error while creating a board.", e)
+                }
     }
 
     fun getCurrentUserID(): String {
@@ -200,90 +300,5 @@ class FirestoreClass {
         }
 
         return currentUserID
-    }
-
-    fun getAssignedMemberListDetails(
-        activity: Activity, assignedTo: ArrayList<String>) {
-        mFireStore.collection(Constants.USERS)
-            .whereIn(Constants.ID, assignedTo)
-            .get()
-            .addOnSuccessListener {
-                document ->
-                Log.e(
-                    activity.javaClass.simpleName,
-                    document.documents.toString()
-                )
-
-                val usersList: ArrayList<User> = ArrayList()
-
-                for(i in document.documents) {
-                    val user = i.toObject(User::class.java)!!
-                    usersList.add(user)
-                }
-
-                if(activity is MembersActivity) {
-                    activity.setUpMemberList(usersList)
-                }else if(activity is TaskListActivity) {
-                    activity.boardMemberDetailsList(usersList)
-                }
-
-            }.addOnFailureListener {
-                e ->
-                if(activity is MembersActivity) {
-                    activity.hideProgressDialog()
-                }else if(activity is TaskListActivity) {
-                    activity.hideProgressDialog()
-
-                }
-                Log.e(
-                    activity.javaClass.simpleName,
-                    "Error while adding a member"
-                )
-            }
-    }
-
-    fun getMemberDetails(activity: MembersActivity, name:String) {
-        mFireStore.collection(Constants.USERS)
-            .whereEqualTo(Constants.NAME, name)
-            .get()
-            .addOnSuccessListener {
-                document ->
-                if(document.documents.size > 0) {
-                    val user = document.documents[0].toObject(User::class.java)!!
-                    activity.memberDetails(user)
-                }else {
-                    activity.hideProgressDialog()
-                    activity.showErrorSnackBar("Такого пользователя не найдено")
-                }
-            }.addOnFailureListener {
-                e ->
-                Log.e(
-                    activity.javaClass.simpleName,
-                    "Ошибка получения данных пользователя",
-                    e
-                )
-            }
-    }
-
-    fun assignMemberToBoard(
-        activity: MembersActivity, board: Board, user: User) {
-
-        val assignToHashMap = HashMap<String, Any>()
-        assignToHashMap[Constants.ASSIGNED_TO] = board.assignedTo
-
-        mFireStore.collection(Constants.BOARDS)
-            .document(board.documentId)
-            .update(assignToHashMap)
-            .addOnSuccessListener {
-                activity.memberAssignSuccess(user)
-            }.addOnFailureListener {
-                e ->
-                Log.e(
-                    activity.javaClass.simpleName,
-                    "Error while adding a member",
-                    e
-                )
-            }
-
     }
 }

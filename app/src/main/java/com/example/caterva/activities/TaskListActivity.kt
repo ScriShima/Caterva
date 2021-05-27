@@ -113,7 +113,7 @@ class TaskListActivity : BaseActivity() {
         setupActionBar()
 
         showProgressDialog(resources.getString(R.string.please_wait))
-        FirestoreClass().getAssignedMemberListDetails(this, mBoardDetails.assignedTo)
+        FirestoreClass().getAssignedMembersListDetails(this, mBoardDetails.assignedTo)
     }
 
     fun createTaskList(taskListName: String) {

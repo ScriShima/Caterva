@@ -10,7 +10,7 @@ import com.example.caterva.activities.MyProfileActivity
 object Constants {
     const val USERS: String = "users"
     const val IMAGE: String = "image"
-    const val MOBILE: String = "mobile"
+    const val MOBILE: String = "phoneNumber"
     const val NAME: String = "name"
     const val BOARDS: String = "boards"
     const val ASSIGNED_TO: String = "assignedTo"
@@ -23,9 +23,21 @@ object Constants {
     const val BOARD_MEMBERS_LIST: String = "board_members_list"
     const val SELECT: String = "Select"
     const val UN_SELECT: String = "UnSelect"
+    const val CATERVA_PREFERENCES = "CatervaPrefs"
+    const val FCM_TOKEN_UPDATED = "fcmTokenUpdated"
+    const val FCM_TOKEN = "fcmToken"
 
     const val READ_STORAGE_PERMISSION_CODE = 1
     const val PICK_IMAGE_REQUEST_CODE = 2
+
+    const val FCM_BASE_URL:String = "https://fcm.googleapis.com/fcm/send"
+    const val FCM_AUTHORIZATION:String = "authorization"
+    const val FCM_KEY:String = "key"
+    const val FCM_SERVER_KEY:String = "AAAApsmhZmo:APA91bHgLyBTxhSsjyVQmXYTNyqCElfSR1TRvijBlsunPnFDDfCLeuZu1OTBeU9hlJKUKzkdc0mMYNSx5rBHIJ6zQCjHM4ll88rhIAdb4X5fe-_3nZ6qEIfezD06RRlpglVpXgF3xCfm"
+    const val FCM_KEY_TITLE:String = "title"
+    const val FCM_KEY_MESSAGE:String = "message"
+    const val FCM_KEY_DATA:String = "data"
+    const val FCM_KEY_TO:String = "to"
 
     fun showImageChooser(activity: Activity) {
         val galleryIntent = Intent(

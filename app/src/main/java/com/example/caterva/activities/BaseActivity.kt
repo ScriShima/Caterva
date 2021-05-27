@@ -15,6 +15,7 @@ import kotlinx.android.synthetic.main.dialog_progress.*
 @Suppress("DEPRECATION")
 open class BaseActivity : AppCompatActivity() {
 
+
     private var doubleBackToExitPressedOnce: Boolean = false
 
     private lateinit var mProgressDialog: Dialog
@@ -22,6 +23,7 @@ open class BaseActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
+
 
     fun showProgressDialog(text: String) {
         mProgressDialog = Dialog(this)
