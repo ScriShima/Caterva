@@ -85,6 +85,9 @@ class TaskListActivity : BaseActivity() {
                 startActivityForResult(intent, MEMBERS_REQUEST_CODE)
                 return true
             }
+            R.id.action_delete_card -> {
+                alertDialogForDeleteBoard(mBoardDetails.name)
+            }
         }
 
         return super.onOptionsItemSelected(item)
@@ -205,6 +208,39 @@ class TaskListActivity : BaseActivity() {
 
         showProgressDialog(resources.getString(R.string.please_wait))
         FirestoreClass().addUpdateTaskList(this, mBoardDetails)
+    }
+
+    private fun alertDialogForDeleteBoard(boardName: String) {
+        val builder = androidx.appcompat.app.AlertDialog.Builder(this)
+
+        builder.setTitle(resources.getString(R.string.alert))
+
+        builder.setMessage(
+            resources.getString(
+                R.string.confirmation_message_to_delete_board,
+                boardName
+            )
+        )
+        builder.setIcon(android.R.drawable.ic_dialog_alert)
+
+
+        builder.setPositiveButton(resources.getString(R.string.yes)) { dialogInterface, which ->
+            dialogInterface.dismiss()
+
+            FirestoreClass().deleteBoard(this, mBoardDetails.documentId)
+            startActivity(Intent(
+                this,
+                MainActivity::class.java
+            ))
+
+        }
+
+        builder.setNegativeButton(resources.getString(R.string.no)) { dialogInterface, which ->
+            dialogInterface.dismiss()
+        }
+        val alertDialog: androidx.appcompat.app.AlertDialog = builder.create()
+        alertDialog.setCancelable(false)
+        alertDialog.show()
     }
 
     companion object {

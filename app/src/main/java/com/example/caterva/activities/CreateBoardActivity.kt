@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
+import android.text.TextUtils
 import android.util.Log
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
@@ -34,7 +35,6 @@ class CreateBoardActivity : BaseActivity() {
         setContentView(R.layout.activity_create_board)
 
         setupActionBar()
-
         if (intent.hasExtra(Constants.NAME)) {
             mUserName = intent.getStringExtra(Constants.NAME)!!
         }
@@ -156,14 +156,21 @@ class CreateBoardActivity : BaseActivity() {
         val assignedUsersArrayList: ArrayList<String> = ArrayList()
         assignedUsersArrayList.add(getCurrentUserID())
 
-        val board = Board(
-                et_board_name.text.toString(),
+        val name: String = et_board_name.text.toString().trim{it <=' '}
+
+        if (name.isNotEmpty()) {
+            val board = Board(
+                name,
                 mBoardImageURL,
                 mUserName,
                 assignedUsersArrayList
-        )
+            )
+            FirestoreClass().createBoard(this@CreateBoardActivity, board)
+        }else {
+            hideProgressDialog()
+            validateForm(name)
+        }
 
-        FirestoreClass().createBoard(this@CreateBoardActivity, board)
     }
 
     fun boardCreatedSuccessfully() {
@@ -171,4 +178,18 @@ class CreateBoardActivity : BaseActivity() {
         setResult(Activity.RESULT_OK)
         finish()
     }
+
+    private fun validateForm(name: String): Boolean {
+        return when {
+            TextUtils.isEmpty(name) -> {
+                showErrorSnackBar("Пожалуйста введите имя доски")
+                false
+            }
+            else -> {
+                true
+            }
+        }
+    }
+
+
 }

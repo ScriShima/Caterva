@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.caterva.R
@@ -19,21 +20,23 @@ open class CardMemberListItemsAdapter(
     private var onClickListener: OnClickListener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return MyViewHolder(LayoutInflater.from(context).inflate(
-            R.layout.item_card_selected_member,
-            parent,
-            false
-        ))
+        return MyViewHolder(
+            LayoutInflater.from(context).inflate(
+                R.layout.item_card_selected_member,
+                parent,
+                false
+            )
+        )
 
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val model = list[position]
-        if(holder is MyViewHolder) {
-            if(position == list.size-1 && assignMembers) {
+        if (holder is MyViewHolder) {
+            if (position == list.size - 1 && assignMembers) {
                 holder.itemView.iv_add_member.visibility = View.VISIBLE
                 holder.itemView.iv_selected_member_image.visibility = View.GONE
-            }else {
+            } else {
                 holder.itemView.iv_add_member.visibility = View.GONE
                 holder.itemView.iv_selected_member_image.visibility = View.VISIBLE
 
@@ -46,7 +49,7 @@ open class CardMemberListItemsAdapter(
             }
 
             holder.itemView.setOnClickListener {
-                if(onClickListener != null) {
+                if (onClickListener != null) {
                     onClickListener!!.onClick()
                 }
             }
@@ -57,6 +60,7 @@ open class CardMemberListItemsAdapter(
         return list.size
     }
 
+
     fun setOnClickListener(onClickListener: OnClickListener) {
         this.onClickListener = onClickListener
     }
@@ -65,5 +69,6 @@ open class CardMemberListItemsAdapter(
         fun onClick()
     }
 
-    class MyViewHolder(view: View): RecyclerView.ViewHolder(view)
+    class MyViewHolder(view: View) : RecyclerView.ViewHolder(view)
 }
+

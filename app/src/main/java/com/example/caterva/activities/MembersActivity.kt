@@ -8,27 +8,26 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.webkit.HttpAuthHandler
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.caterva.R
-import com.example.caterva.adapters.MemberListItemsAdapter
+import com.example.caterva.adapters.MemberListItemsForBoardAdapter
 import com.example.caterva.firebase.FirestoreClass
 import com.example.caterva.models.Board
-import com.example.caterva.models.Task
+import com.example.caterva.models.SelectedMembers
 import com.example.caterva.models.User
 import com.example.caterva.utils.Constants
 import com.example.caterva.utils.Translit
-import com.google.firebase.auth.FirebaseAuth
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_members.*
 import kotlinx.android.synthetic.main.dialog_search_member.*
-import org.json.JSONArray
+import kotlinx.android.synthetic.main.item_member_delete.*
 import org.json.JSONObject
 import java.io.*
 import java.lang.Exception
 import java.lang.StringBuilder
+import java.lang.reflect.Member
 import java.net.HttpURLConnection
-import java.net.Socket
 import java.net.SocketTimeoutException
 import java.net.URL
 
@@ -59,15 +58,17 @@ class MembersActivity : BaseActivity() {
 
 
     fun setUpMemberList(list: ArrayList<User>) {
-
         mAssignedMembersList = list
         hideProgressDialog()
 
         rv_members_list.layoutManager = LinearLayoutManager(this)
         rv_members_list.setHasFixedSize(true)
 
-        val adapter = MemberListItemsAdapter(this, list)
+
+        val adapter = MemberListItemsForBoardAdapter(this, list, mBoardDetails)
         rv_members_list.adapter = adapter
+
+
     }
 
     fun memberDetails(user: User) {
@@ -243,5 +244,7 @@ class MembersActivity : BaseActivity() {
             Log.e("JSON Response Result", result)
         }
     }
+
+
 
 }

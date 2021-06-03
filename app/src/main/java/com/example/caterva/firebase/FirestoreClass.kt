@@ -1,6 +1,7 @@
 package com.example.caterva.firebase
 
 import android.app.Activity
+import android.content.Intent
 import android.util.Log
 import android.widget.Toast
 import com.example.caterva.activities.*
@@ -9,6 +10,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.example.caterva.models.User
 import com.example.caterva.utils.Constants
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.SetOptions
 
 class FirestoreClass {
@@ -180,6 +182,14 @@ class FirestoreClass {
                 }
     }
 
+    fun deleteBoard(activity: TaskListActivity, documentId: String) {
+        mFireStore.collection(Constants.BOARDS)
+            .document(documentId)
+            .delete()
+            .addOnSuccessListener {  }
+            .addOnFailureListener {  }
+    }
+
     fun addUpdateTaskList(activity: Activity, board: Board) {
 
         val taskListHashMap = HashMap<String, Any>()
@@ -209,11 +219,11 @@ class FirestoreClass {
 
     fun getAssignedMembersListDetails(activity: Activity, assignedTo: ArrayList<String>) {
 
-        mFireStore.collection(Constants.USERS) // Collection Name
+        mFireStore.collection(Constants.USERS)
                 .whereIn(
                         Constants.ID,
                         assignedTo
-                ) // Here the database field name and the id's of the members.
+                )
                 .get()
                 .addOnSuccessListener { document ->
                     Log.e(activity.javaClass.simpleName, document.documents.toString())
@@ -221,7 +231,7 @@ class FirestoreClass {
                     val usersList: ArrayList<User> = ArrayList()
 
                     for (i in document.documents) {
-                        // Convert all the document snapshot to the object using the data model class.
+
                         val user = i.toObject(User::class.java)!!
                         usersList.add(user)
                     }
@@ -291,6 +301,8 @@ class FirestoreClass {
                 }
     }
 
+
+
     fun getCurrentUserID(): String {
         val currentUser = FirebaseAuth.getInstance().currentUser
 
@@ -300,5 +312,19 @@ class FirestoreClass {
         }
 
         return currentUserID
+    }
+
+    fun deleteAssignedMembers(activity: MembersActivity, documentId: String, assignedToId: String) {
+        val docRef = mFireStore.collection(Constants.BOARDS)
+                .document(documentId)
+
+        val updates = hashMapOf<String, Any>(
+                "assignedTo" to FieldValue.arrayRemove(assignedToId)
+        )
+
+        docRef.update(updates).addOnCompleteListener {
+
+        }
+
     }
 }

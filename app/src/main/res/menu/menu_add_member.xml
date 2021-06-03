@@ -6,7 +6,6 @@
         android:icon="@drawable/ic_baseline_add_24"
         android:orderInCategory="100"
         android:title="add"
-        app:showAsAction="always">
+        app:showAsAction="always"/>
 
-    </item>
 </menu>
